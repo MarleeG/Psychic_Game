@@ -9,6 +9,7 @@ Guess the letter! Type in the letter you believe is the secret letter. Happy Gue
 - CSS
 - HTML
 - Javscript
+- jQuery
 
 
 ## Deployed App
