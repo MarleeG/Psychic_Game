@@ -1,14 +1,10 @@
-const log = console.log;
-
 function psychic_game() {
-    // $('#game_instructions').modal('show');
-
+    modalDisplay('Instructions', 'Guess the correct secret letter. Click anywhere on the screen to begin.');
     const letters = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     ];
 
     let lettersPicked = [];
-
     let guessesLeft = 9;
     let randomLetter = '';
     let wins = 0;
@@ -21,7 +17,11 @@ function psychic_game() {
         $('#losses').text(losses)
     }
 
-
+    function modalDisplay(title, body) {
+        $('.game-modal-title').text(title);
+        $('.game-modal-body').text(body);
+        $('#game-modal').modal('show');
+    }
     // This will allow a random letter to be selected unknown to the user
     function randomLetterGenerator(array) {
         let randonNum = Math.floor(Math.random() * array.length)
@@ -35,18 +35,15 @@ function psychic_game() {
         }
     }
 
-    function restartGame(){
+    function restartGame() {
         randomLetter = randomLetterGenerator(letters);
         guessesLeft = 9;
         lettersPicked = [];
         $('#letters_guessed').text('');
         displayScores();
-
-        log(`random letter:  ${randomLetter}`);
     }
-    $(document).on('keyup', function (x) {
 
-        
+    $(document).on('keyup', function (x) {
 
         // if the letter keyed is already in the lettersPicked array then...do not push it to the array again
         if (lettersPicked.indexOf(x.key) === -1) {
@@ -58,30 +55,26 @@ function psychic_game() {
             updateLettersGuessed(lettersPicked);
 
             // If there arent any guesses left then...
-
-            if(guessesLeft === 0){
+            if (guessesLeft === 0) {
                 losses++;
                 restartGame();
             }
 
-            if(x.key === randomLetter){
-                alert(`You've guessed correctly!`);
+            if (x.key === randomLetter) {
+                modalDisplay('Hooray!', `You've guessed correctly!`)
                 wins++;
                 restartGame();
             }
 
-        // if the letter exist in the in the lettersPicked array that user just entered...
-        }else if(lettersPicked.indexOf(x.key) >= 0){
-            alert(`You've entered this letter already. Please choose another letter.`)
+            // if the letter exist in the in the lettersPicked array that user just entered...
+        } else if (lettersPicked.indexOf(x.key) >= 0) {
+            modalDisplay('Uh-oh!', `You've entered this letter already. Please choose another letter.`)
         }
     })
 
     displayScores();
     randomLetter = randomLetterGenerator(letters);
-
-    log(`random letter:  ${randomLetter}`);
 }
-
 
 $(document).ready(function () {
     psychic_game();
