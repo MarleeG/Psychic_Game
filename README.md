@@ -1,4 +1,4 @@
-# Psychic_Game
+# Psychic Game
 
 
 Guess the letter! Type in the letter you believe is the secret letter. Happy Guessing! 
